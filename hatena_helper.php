@@ -22,7 +22,12 @@ function hatena_entries($url, $count=5) {
 }
 
 function _get_hatena_entries_cache($url) {
-	$rdf = file_get_contents(dirname(__FILE__).'/'.md5($url).'.cache');
+	$filename = dirname(__FILE__).'/'.md5($url).'.cache';
+	$cache_limit = time() + (60 * 60 * 24);
+	if (!file_exists($filename) || $cache_limit > filectime($filename)) {
+		return null;
+	}
+	$rdf = file_get_contents($filename);
 	if (empty($rdf)) {
 		return null;
 	}
@@ -31,7 +36,7 @@ function _get_hatena_entries_cache($url) {
 }
 
 function _set_hatena_entries_cache($url, $rdf) {
-	$fp = fopen(dirname(__FILE__).'/'.md5($url).'.cache', 'rw');
+	$fp = fopen(dirname(__FILE__).'/'.md5($url).'.cache', 'wb');
 	fwrite($fp, $rdf);
 	fclose($fp);
 }
