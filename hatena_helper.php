@@ -9,7 +9,7 @@ function hatena_entries($url, $count=5) {
 		$rdf = str_replace('dc:subject', 'dc_subject', $rdf);
 		$rdf = str_replace('hatena:bookmarkcount', 'hatena_bookmarkcount', $rdf);
 		$data = simplexml_load_string($rdf);
-		_set_hatena_entries_cache($url, $data);
+		_set_hatena_entries_cache($url, $rdf);
 		$entries = $data->item;
 	}
 
@@ -22,10 +22,18 @@ function hatena_entries($url, $count=5) {
 }
 
 function _get_hatena_entries_cache($url) {
-	return array();
+	$rdf = file_get_contents(dirname(__FILE__).'/'.md5($url).'.cache');
+	if (empty($rdf)) {
+		return null;
+	}
+	$data = simplexml_load_string($rdf);
+	return $data->item;
 }
 
-function _set_hatena_entries_cache($url, $data) {
+function _set_hatena_entries_cache($url, $rdf) {
+	$fp = fopen(dirname(__FILE__).'/'.md5($url).'.cache', 'rw');
+	fwrite($fp, $rdf);
+	fclose($fp);
 }
 
 ?>
