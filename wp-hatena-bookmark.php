@@ -8,4 +8,5 @@ Author: Tatsuya Fukata
 Author URI: http://fukata.org
 */
 
+require_once(dirname(__FILE__).'/hatena_helper.php'));
 ?>
