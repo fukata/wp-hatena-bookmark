@@ -17,7 +17,7 @@ http://github.com/fukata/wp-hatena-bookmark/
 
 == Installation ==
 
-1. 解凍後、フォルダ「wp-flickr-press/」をディレクトリ「/wp-content/plugins/」にアップロードする。
+1. 解凍後、フォルダ「wp-hatena-bookmark/」をディレクトリ「/wp-content/plugins/」にアップロードする。
 2. 管理画面よりプラグイン「wp-hatena-bookmark」をアクティベートを行う。
 
 == Frequently Asked Questions ==
