@@ -1,7 +1,7 @@
 <?php
 
-function hatena_popular_entries($url, $count=5) {
-	$entries = _get_hatena_popular_entries_cache($url);
+function hatena_entries($url, $count=5) {
+	$entries = _get_hatena_entries_cache($url);
 	if (empty($entries)) {
 		$url = "http://b.hatena.ne.jp/entrylist?sort=count&url=$url&mode=rss";
 		$rdf = file_get_contents($url);	
@@ -9,7 +9,7 @@ function hatena_popular_entries($url, $count=5) {
 		$rdf = str_replace('dc:subject', 'dc_subject', $rdf);
 		$rdf = str_replace('hatena:bookmarkcount', 'hatena_bookmarkcount', $rdf);
 		$data = simplexml_load_string($rdf);
-		_set_hatena_popular_entries_cache($url, $rdf);
+		_set_hatena_entries_cache($url, $rdf);
 		$entries = $data->item;
 	}
 
@@ -25,7 +25,7 @@ function _hatena_popular_cache($url) {
 	return dirname(__FILE__).'/'.md5($url).'.cache';
 }
 
-function _get_hatena_popular_entries_cache($url) {
+function _get_hatena_entries_cache($url) {
 	$filename = _hatena_popular_cache($url);
 	$cache_limit = time() + (60 * 60 * 24);
 	if (!file_exists($filename) || $cache_limit > filectime($filename)) {
@@ -39,7 +39,7 @@ function _get_hatena_popular_entries_cache($url) {
 	return $data->item;
 }
 
-function _set_hatena_popular_entries_cache($url, $rdf) {
+function _set_hatena_entries_cache($url, $rdf) {
 	$fp = fopen(_hatena_popular_cache($url), 'wb');
 	fwrite($fp, $rdf);
 	fclose($fp);
