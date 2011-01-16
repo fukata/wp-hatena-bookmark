@@ -21,8 +21,12 @@ function hatena_popular_entries($url, $count=5) {
 	return $list;
 }
 
+function _hatena_popular_cache($url) {
+	return dirname(__FILE__).'/'.md5($url).'.cache';
+}
+
 function _get_hatena_popular_entries_cache($url) {
-	$filename = dirname(__FILE__).'/'.md5($url).'.cache';
+	$filename = _hatena_popular_cache($url);
 	$cache_limit = time() + (60 * 60 * 24);
 	if (!file_exists($filename) || $cache_limit > filectime($filename)) {
 		return null;
@@ -36,7 +40,7 @@ function _get_hatena_popular_entries_cache($url) {
 }
 
 function _set_hatena_popular_entries_cache($url, $rdf) {
-	$fp = fopen(dirname(__FILE__).'/'.md5($url).'.cache', 'wb');
+	$fp = fopen(_hatena_popular_cache($url), 'wb');
 	fwrite($fp, $rdf);
 	fclose($fp);
 }
