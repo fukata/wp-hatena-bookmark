@@ -23,7 +23,7 @@ http://github.com/fukata/wp-hatena-bookmark/
 
 <ul>
   <?php
-    $entries = hatena_entries(get_bloginfo('url'), 10); 
+    $entries = hatena_entries(get_bloginfo('url'), array('count'=>10, 'sort'=>'count')); 
     foreach ($entries as $entry) {
   ?>
   <li><a href="<?php echo $entry->link ?>"><?php echo $entry->title ?></a> <span class="hatena-bookmark-count"><a href="<?php echo "http://b.hatena.ne.jp/entry/".$entry->link ?>" target="_blank"><?php echo $entry->hatena_bookmarkcount ?>users</a></span></li>
