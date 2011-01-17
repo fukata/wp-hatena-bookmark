@@ -4,7 +4,6 @@ function hatena_entries($blogurl, $filter=array('count'=>5,'sort'=>'count')) {
 	$url = _hatena_entries_url($blogurl, $filter);
 	$entries = _get_hatena_entries_cache($url);
 	if (empty($entries)) {
-		$url = "http://b.hatena.ne.jp/entrylist?url=$url&mode=rss";
 		$rdf = file_get_contents($url);	
 		$rdf = str_replace('dc:date', 'dc_date', $rdf);
 		$rdf = str_replace('dc:subject', 'dc_subject', $rdf);
@@ -14,6 +13,7 @@ function hatena_entries($blogurl, $filter=array('count'=>5,'sort'=>'count')) {
 		$entries = $data->item;
 	}
 
+	$count = isset($filter['count']) && is_numeric($filter['count']) ? intval($filter['count']) : 5;
 	$count = count($entries) > $count ? $count : count($entries);
 	$list = array();
 	for ($i=0; $i<$count; $i++) {
@@ -24,8 +24,9 @@ function hatena_entries($blogurl, $filter=array('count'=>5,'sort'=>'count')) {
 
 function _hatena_entries_url($blogurl, $filter) {
 	$url = "http://b.hatena.ne.jp/entrylist?url=$blogurl";
-	$url .= count($filter)>0 ? "&" : "";
-	$url .= implode("&", $filter);
+	foreach ($filter as $key => $val) {
+		$url .= "&$key=$val";
+	}
 	$url .= "&mode=rss";
 	return $url;
 }
