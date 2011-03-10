@@ -37,7 +37,7 @@ function _hatena_popular_cache($url) {
 
 function _get_hatena_entries_cache($url) {
 	$filename = _hatena_popular_cache($url);
-	$cache_limit = time() + (60 * 60 * 24);
+	$cache_limit = time() + (60 * 60 * 1);
 	if (!file_exists($filename) || $cache_limit > filectime($filename)) {
 		return null;
 	}
