@@ -4,7 +4,7 @@ Donate link: http://fukata.org/
 Tags: hatena,bookmark
 Requires at least: 3.0.1
 Tested up to: 3.0.1
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 
 はてなブックマークの人気エントリー情報を表示するためのヘルパーメソッド群。
 
@@ -37,6 +37,9 @@ http://github.com/fukata/wp-hatena-bookmark/
 == Screenshots ==
 
 == Changelog ==
+= 0.2.1 =
+* プラグインの説明を修正
+
 = 0.2.0 =
 * 対象URLのコンテンツをファイルにキャッシュするように修正
 
